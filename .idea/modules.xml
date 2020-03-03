@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/vx-data-store-project.iml" filepath="$PROJECT_DIR$/vx-data-store-project.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/vx-ds.iml" filepath="$PROJECT_DIR$/.idea/vx-ds.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vx-ds-server/vx-ds-server.iml" filepath="$PROJECT_DIR$/vx-ds-server/vx-ds-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vx-ds-server/vx-ds-server-boot/vx-ds-server-boot.iml" filepath="$PROJECT_DIR$/vx-ds-server/vx-ds-server-boot/vx-ds-server-boot.iml" />
     </modules>
   </component>
 </project>

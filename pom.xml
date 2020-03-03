@@ -29,4 +29,82 @@
         <connection>https://github.com/snelyuibn/vx-ds.git</connection>
     </scm>
 
+    <properties>
+        <project.build.source.encoding>UTF-8</project.build.source.encoding>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <project.build.source.version>1.8</project.build.source.version>
+        <project.build.target.version>1.8</project.build.target.version>
+        <project.build.maxmem>4g</project.build.maxmem>
+        <groovy-eclipse-compiler.version>3.3.0-01</groovy-eclipse-compiler.version>
+        <groovy-eclipse-batch.version>2.5.8-02</groovy-eclipse-batch.version>
+        <project.build.verbose>true</project.build.verbose>
+
+        <groovy.version>3.0.1</groovy.version>
+        <spring-boot.version>2.2.5.RELEASE</spring-boot.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-eclipse-compiler</artifactId>
+                <version>${groovy-eclipse-compiler.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-eclipse-batch</artifactId>
+                <version>${groovy-eclipse-batch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>${groovy.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${project.build.source.version}</source>
+                        <target>${project.build.target.version}</target>
+                        <encoding>${project.build.source.encoding}</encoding>
+                        <maxmem>${project.build.maxmem}</maxmem>
+                        <compilerId>groovy-eclipse-compiler</compilerId>
+                        <verbose>${project.build.verbose}</verbose>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-eclipse-compiler</artifactId>
+                            <version>${groovy-eclipse-compiler.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-eclipse-batch</artifactId>
+                            <version>${groovy-eclipse-batch.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <modules>
+        <module>vx-ds-server</module>
+    </modules>
+
 </project>
