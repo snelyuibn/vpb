@@ -12,6 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="vx-data-store-project" target="1.5" />
+      <module name="vx-ds" target="1.5" />
       <module name="vx-ds-server" target="1.5" />
       <module name="vx-ds-server-boot" target="1.8" />
     </bytecodeTargetLevel>
