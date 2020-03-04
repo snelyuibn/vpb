@@ -3,6 +3,7 @@ package ru.varimax.data.store.server.core
 import groovy.util.logging.Slf4j
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.boot.jdbc.DataSourceBuilder
 import org.springframework.context.ApplicationContext
@@ -12,11 +13,10 @@ import javax.sql.DataSource
 import java.text.SimpleDateFormat
 
 import static java.lang.Thread.currentThread
-import static ru.varimax.data.store.server.core.ServerState.DESTROYED
 import static ru.varimax.data.store.server.core.ServerState.STARTED
 import static ru.varimax.data.store.server.core.ServerState.STOPPED
 import static ru.varimax.data.store.server.core.ServerType.EMBEDDED
-import static ru.varimax.data.store.server.core.ServerType.STANDALONE
+import static ru.varimax.data.store.server.core.ServerType.HTTP
 
 @SpringBootApplication
 @Slf4j
@@ -33,15 +33,15 @@ class VxDataStoreServer {
     ApplicationContext applicationContext
     Thread serverThread
 
-    public static long startTimestamp = 0
-    public static long stopTimestamp = 0
+    public long startTimestamp = 0
+    public long stopTimestamp = 0
 
     static VxDataStoreServer embedded() {
         return new VxDataStoreServer(EMBEDDED)
     }
 
-    static VxDataStoreServer standalone() {
-        return new VxDataStoreServer(STANDALONE)
+    static VxDataStoreServer http() {
+        return new VxDataStoreServer(HTTP)
     }
 
     VxDataStoreServer() {
@@ -79,72 +79,79 @@ class VxDataStoreServer {
 
     VxDataStoreServer start() {
         startTimestamp = System.currentTimeMillis()
-        String message = "\n\n   ***   Varimax data store ${serverType} server STARTING...   ***  \n"
-        println "${new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date(startTimestamp))} ${message}"
+        printLog "\n\n   ***   Varimax data store ${serverType} server '${instanceName}' STARTING...   ***  \n"
 
         if (serverType == EMBEDDED) {
             dataSource = DataSourceBuilder.create().url(dataSourceUrl).username(dataSourceUsername).password(dataSourcePassword).build()
-            Runnable runnable = new Runnable() {
-                @Override
-                void run() {
-                    try {
-                        long startTimestamp = System.currentTimeMillis()
-                        while (currentThread().alive && currentThread().interrupted == false) {
-                            println "${currentThread().name} has ${currentThread().state} state - ${System.currentTimeMillis() - startTimestamp} msec"
-                            Thread.sleep(200)
-                        }
-                        println "${currentThread().name} has ${currentThread().state} state - ${System.currentTimeMillis() - startTimestamp} msec"
-                    } catch (InterruptedException e) {
-                        println "${currentThread().name} : ${e.message} - ${System.currentTimeMillis() - startTimestamp} msec"
+            serverThread = new Thread({
+                try {
+                    long startTimestamp = System.currentTimeMillis()
+                    while (currentThread().alive && currentThread().interrupted == false) {
+                        printLog "${currentThread().name} has ${currentThread().state} state - ${System.currentTimeMillis() - startTimestamp} msec"
+                        Thread.sleep(1000)
                     }
+                    printLog "${currentThread().name} has ${currentThread().state} state - ${System.currentTimeMillis() - startTimestamp} msec"
+                } catch (InterruptedException e) {
+                    printLog "${currentThread().name} : ${e.message} - ${System.currentTimeMillis() - startTimestamp} msec"
                 }
-            }
-            serverThread = new Thread(runnable)
+            })
             serverThread.name = "VxDataStoreEmbeddedServerThread"
             serverThread.daemon = false
             serverThread.start()
+            long duration = System.currentTimeMillis() - startTimestamp
+            String durationText = duration < 1000 ? "${duration} msec." : "${(duration / 1000) as int} sec."
+            String readyMessage = "\n\n   ***   Varimax data store ${EMBEDDED} server '${instanceName}' READY (startup duration ${durationText})   ***  \n"
+            printLog(readyMessage)
         }
-        if (serverType == STANDALONE) {
-            SpringApplication.run(VxDataStoreServer)
+        if (serverType == HTTP) {
+            SpringApplicationBuilder springApplicationBuilder = new SpringApplicationBuilder(VxDataStoreServer)
+            SpringApplication springApplication = springApplicationBuilder.build()
+            applicationContext = springApplication.run(
+                "--vx.http.server.instance.name=${instanceName}",
+                "--vx.http.server.instance.start.timestamp=${startTimestamp}"
+            )
         }
         serverState = STARTED
         return this
     }
 
     VxDataStoreServer stop() {
-        if (serverState == STARTED) {
-            dataSource.connection.close()
-        }
-        if (serverThread) {
-            while (serverThread.alive && serverThread.interrupted == false) {
-                println "Send interrupt signal to ${serverThread.name}"
-                serverThread.interrupt()
-                Thread.sleep(200)
+        if (serverType == EMBEDDED) {
+            if (serverState == STARTED && dataSource) {
+                dataSource.connection.close()
+            }
+            if (serverThread) {
+                while (serverThread.alive && serverThread.interrupted == false) {
+                    printLog "Send interrupt signal to ${serverThread.name}"
+                    serverThread.interrupt()
+                    Thread.sleep(200)
+                }
             }
         }
-        serverState = STOPPED
-        return this
-    }
-
-    VxDataStoreServer destroy() {
-        if (serverState != STOPPED) {
-            stop()
+        if (serverType == HTTP) {
+            SpringApplication.exit(applicationContext)
         }
-        serverState = DESTROYED
+        serverState = STOPPED
+        stopTimestamp = System.currentTimeMillis()
         return this
     }
 
     @EventListener(ApplicationReadyEvent)
     void onSpringBootAppReady(ApplicationReadyEvent event) {
         applicationContext = event.applicationContext
-        stopTimestamp = System.currentTimeMillis()
-        long duration = stopTimestamp - startTimestamp
-        String durationText = duration < 1000 ? "${duration} msec." : "${(duration / 1000) as int} sec.}"
-        String message = "\n\n   ***   Varimax data store server READY (startup duration ${durationText})   ***  \n"
+        String instanceName = applicationContext.environment.getProperty("vx.http.server.instance.name")
+        long startTimestamp = applicationContext.environment.getProperty("vx.http.server.instance.start.timestamp") as long
+        long duration = System.currentTimeMillis() - startTimestamp
+        String durationText = duration < 1000 ? "${duration} msec." : "${(duration / 1000) as int} sec."
+        String message = "\n\n   ***   Varimax data store ${HTTP} server '${instanceName}' READY (startup duration ${durationText})   ***  \n"
+        printLog(message)
+    }
+
+    private void printLog(String message) {
         if (log.infoEnabled) {
             log.info("${message}")
         } else {
-            println "${new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date(stopTimestamp))} ${message}"
+            println "${new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(new Date())} ${message}"
         }
     }
 
@@ -152,12 +159,11 @@ class VxDataStoreServer {
 
 enum ServerType {
     EMBEDDED,
-    STANDALONE
+    HTTP
 }
 
 enum ServerState {
     CREATED,
     STARTED,
-    STOPPED,
-    DESTROYED
+    STOPPED
 }

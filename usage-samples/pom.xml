@@ -22,7 +22,7 @@
 
     <modules>
         <module>embedded-server-usage</module>
-        <module>standalone-server-usage</module>
+        <module>http-server-usage</module>
     </modules>
 
 </project>

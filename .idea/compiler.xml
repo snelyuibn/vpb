@@ -7,14 +7,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="standalone-server-usage" />
+        <module name="http-server-usage" />
         <module name="embedded-server-usage" />
-        <module name="vx-ds-server-boot" />
         <module name="vx-ds-server-core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="embedded-server-usage" target="1.8" />
+      <module name="http-server-usage" target="1.8" />
       <module name="standalone-server-usage" target="1.8" />
       <module name="usage-samples" target="1.5" />
       <module name="vx-data-store-project" target="1.5" />

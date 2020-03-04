@@ -21,7 +21,6 @@
     <description>VX data store server</description>
 
     <modules>
-        <module>vx-ds-server-boot</module>
         <module>vx-ds-server-core</module>
     </modules>
 

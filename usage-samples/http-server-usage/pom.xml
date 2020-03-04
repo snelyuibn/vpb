@@ -12,13 +12,13 @@
     </parent>
 
     <groupId>ru.varimax.data.store.server</groupId>
-    <artifactId>standalone-server-usage</artifactId>
+    <artifactId>http-server-usage</artifactId>
     <version>1.0.0</version>
 
     <packaging>jar</packaging>
 
-    <name>VX data store standalone server usage sample</name>
-    <description>VX data store standalone server usage sample</description>
+    <name>VX data store http server usage sample</name>
+    <description>VX data store http server usage sample</description>
 
     <dependencies>
         <dependency>

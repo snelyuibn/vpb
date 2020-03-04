@@ -3,11 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/usage-samples/embedded-server-usage/embedded-server-usage.iml" filepath="$PROJECT_DIR$/usage-samples/embedded-server-usage/embedded-server-usage.iml" />
-      <module fileurl="file://$PROJECT_DIR$/usage-samples/standalone-server-usage/standalone-server-usage.iml" filepath="$PROJECT_DIR$/usage-samples/standalone-server-usage/standalone-server-usage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/usage-samples/http-server-usage/http-server-usage.iml" filepath="$PROJECT_DIR$/usage-samples/http-server-usage/http-server-usage.iml" />
       <module fileurl="file://$PROJECT_DIR$/usage-samples/usage-samples.iml" filepath="$PROJECT_DIR$/usage-samples/usage-samples.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/vx-ds.iml" filepath="$PROJECT_DIR$/.idea/vx-ds.iml" />
       <module fileurl="file://$PROJECT_DIR$/vx-ds-server/vx-ds-server.iml" filepath="$PROJECT_DIR$/vx-ds-server/vx-ds-server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/vx-ds-server/vx-ds-server-boot/vx-ds-server-boot.iml" filepath="$PROJECT_DIR$/vx-ds-server/vx-ds-server-boot/vx-ds-server-boot.iml" />
       <module fileurl="file://$PROJECT_DIR$/vx-ds-server/vx-ds-server-core/vx-ds-server-core.iml" filepath="$PROJECT_DIR$/vx-ds-server/vx-ds-server-core/vx-ds-server-core.iml" />
     </modules>
   </component>

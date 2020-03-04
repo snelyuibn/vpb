@@ -21,6 +21,5 @@ class EmbeddedServerUsageSampleApp {
         sleep 5000
 
         embeddedServer.stop()
-        embeddedServer.destroy()
     }
 }
