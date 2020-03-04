@@ -1,4 +1,4 @@
-package ru.varimax.data.store.server
+package ru.varimax.data.store.server.core
 
 import org.glassfish.jersey.server.ResourceConfig
 import org.glassfish.jersey.servlet.ServletContainer
@@ -8,18 +8,14 @@ import org.springframework.context.annotation.Configuration
 
 import javax.ws.rs.ApplicationPath
 
-import static ru.varimax.data.store.server.Const.JAXRS_APPLICATION_PATH
-
-interface Const {
-    public static final String JAXRS_APPLICATION_PATH = "/agrest"
-}
+import static ru.varimax.data.store.server.core.web.Const.JAXRS_APPLICATION_PATH
 
 @Configuration
 @ApplicationPath(JAXRS_APPLICATION_PATH)
-class VxDataStoreServerConfig extends ResourceConfig {
+class ResourceConfigExt extends ResourceConfig {
 
-    VxDataStoreServerConfig() {
-        packages( "ru.varimax.data.store.serverd" )
+    ResourceConfigExt() {
+        packages("ru.varimax.data.store.server")
     }
 
     @Bean

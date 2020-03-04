@@ -13,13 +13,13 @@
     </parent>
 
     <groupId>ru.varimax.data.store.server</groupId>
-    <artifactId>vx-ds-server-boot</artifactId>
+    <artifactId>vx-ds-server-core</artifactId>
     <version>1.0.0</version>
 
     <packaging>jar</packaging>
 
-    <name>VX data store server boot</name>
-    <description>VX data store server boot</description>
+    <name>VX data store server core</name>
+    <description>VX data store server core</description>
 
     <dependencies>
         <dependency>
@@ -28,18 +28,12 @@
             <type>pom</type>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -54,18 +48,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ru.varimax.data.store.server</groupId>
-            <artifactId>vx-ds-server-core</artifactId>
         </dependency>
     </dependencies>
 

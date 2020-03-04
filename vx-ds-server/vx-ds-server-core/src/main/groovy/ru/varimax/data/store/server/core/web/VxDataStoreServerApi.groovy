@@ -1,4 +1,4 @@
-package ru.varimax.data.store.server
+package ru.varimax.data.store.server.core.web
 
 import org.glassfish.jersey.servlet.ServletContainer
 import org.springframework.web.bind.annotation.GetMapping

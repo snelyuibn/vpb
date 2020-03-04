@@ -11,18 +11,18 @@
         <version>1.0.0</version>
     </parent>
 
-    <groupId>ru.varimax.data.store.server</groupId>
-    <artifactId>vx-ds-server</artifactId>
+    <groupId>ru.varimax.data.store.usages</groupId>
+    <artifactId>usage-samples</artifactId>
     <version>1.0.0</version>
 
     <packaging>pom</packaging>
 
-    <name>VX data store server</name>
-    <description>VX data store server</description>
+    <name>VX data store usage samples</name>
+    <description>VX data store usage samples</description>
 
     <modules>
-        <module>vx-ds-server-boot</module>
-        <module>vx-ds-server-core</module>
+        <module>embedded-server-usage</module>
+        <module>standalone-server-usage</module>
     </modules>
 
 </project>

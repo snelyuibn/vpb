@@ -1,4 +1,4 @@
-package ru.varimax.data.store.server
+package ru.varimax.data.store.server.core.web
 
 import org.springframework.stereotype.Component
 

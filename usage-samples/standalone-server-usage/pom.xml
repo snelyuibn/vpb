@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress MavenRedundantGroupId -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -7,25 +6,29 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>ru.varimax.data.store.server</groupId>
-        <artifactId>vx-ds-server</artifactId>
+        <groupId>ru.varimax.data.store.usages</groupId>
+        <artifactId>usage-samples</artifactId>
         <version>1.0.0</version>
     </parent>
 
     <groupId>ru.varimax.data.store.server</groupId>
-    <artifactId>vx-ds-server-boot</artifactId>
+    <artifactId>standalone-server-usage</artifactId>
     <version>1.0.0</version>
 
     <packaging>jar</packaging>
 
-    <name>VX data store server boot</name>
-    <description>VX data store server boot</description>
+    <name>VX data store standalone server usage sample</name>
+    <description>VX data store standalone server usage sample</description>
 
     <dependencies>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -1,8 +1,12 @@
-package ru.varimax.data.store.server
+package ru.varimax.data.store.server.core.web
 
 import javax.servlet.http.HttpServletRequest
 
-import static ru.varimax.data.store.server.Const.JAXRS_APPLICATION_PATH
+import static ru.varimax.data.store.server.core.web.Const.JAXRS_APPLICATION_PATH
+
+interface Const {
+    public static final String JAXRS_APPLICATION_PATH = "/agrest"
+}
 
 class HttpServletRequestExt implements HttpServletRequest {
 
